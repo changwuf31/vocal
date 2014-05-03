@@ -640,8 +640,11 @@ class Vocal extends Model
                 // Save record on success, log errors on fail
                 if ($result)
                 {
-                    if (method_exists($this->$modelClass(), 'associate')) $this->$modelClass()->associate($record)->forceSave();
-                    else
+                    if (method_exists($this->$modelClass(), 'associate'))
+                    { 
+                        $record->save();
+                        $this->$modelClass()->associate($record)->forceSave();
+                    } else
                     {
                         $result = $this->$modelClass()->saveRelation($record);
 
